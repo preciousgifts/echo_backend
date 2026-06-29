@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = await import("uuid");
 const supabase = require("../config/database");
 const EmailService = require("../utils/email");
 const logger = require("../config/logger");
@@ -91,7 +91,7 @@ class AuthController {
       const token = jwt.sign(
         { userId: user.user_id, email: user.email, role: user.role },
         process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRES_IN }
+        { expiresIn: process.env.JWT_EXPIRES_IN },
       );
 
       logger.info("User registered successfully", {
@@ -150,7 +150,7 @@ class AuthController {
       // Verify password
       const isPasswordValid = await bcrypt.compare(
         password,
-        user.password_hash
+        user.password_hash,
       );
 
       if (!isPasswordValid) {
@@ -170,7 +170,7 @@ class AuthController {
       const token = jwt.sign(
         { userId: user.user_id, email: user.email, role: user.role },
         process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRES_IN }
+        { expiresIn: process.env.JWT_EXPIRES_IN },
       );
 
       logger.info("User logged in successfully", { userId: user.user_id });
@@ -289,7 +289,12 @@ class AuthController {
       const userId = req.user.user_id;
       const { currentPassword, newPassword } = req.body || {};
       if (!currentPassword || !newPassword) {
-        return res.status(400).json({ success: false, message: "currentPassword and newPassword are required" });
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: "currentPassword and newPassword are required",
+          });
       }
 
       // Get user with password hash
@@ -309,7 +314,7 @@ class AuthController {
       // Verify current password
       const isCurrentPasswordValid = await bcrypt.compare(
         currentPassword,
-        user.password_hash
+        user.password_hash,
       );
 
       if (!isCurrentPasswordValid) {
@@ -389,7 +394,7 @@ class AuthController {
             otp,
             expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
           },
-          { onConflict: "user_id" }
+          { onConflict: "user_id" },
         );
 
       if (updateError) throw new Error(updateError.message);
@@ -417,7 +422,9 @@ class AuthController {
       const { email, otp } = req.body;
 
       if (!email || !otp) {
-        return res.status(400).json({ success: false, message: "Email and OTP are required" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Email and OTP are required" });
       }
 
       const { data: user, error: userError } = await supabase
@@ -427,7 +434,9 @@ class AuthController {
         .single();
 
       if (userError || !user) {
-        return res.status(404).json({ success: false, message: "User not found" });
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
       }
 
       const { data: otpRecord, error: otpError } = await supabase
@@ -437,22 +446,32 @@ class AuthController {
         .maybeSingle();
 
       if (otpError) {
-        return res.status(400).json({ success: false, message: "Failed to retrieve OTP record" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Failed to retrieve OTP record" });
       }
       if (!otpRecord) {
-        return res.status(400).json({ success: false, message: "OTP not found or already used" });
+        return res
+          .status(400)
+          .json({ success: false, message: "OTP not found or already used" });
       }
       if (otpRecord.otp !== otp) {
         return res.status(400).json({ success: false, message: "Invalid OTP" });
       }
       if (new Date(otpRecord.expires_at) < new Date()) {
-        return res.status(400).json({ success: false, message: "OTP has expired" });
+        return res
+          .status(400)
+          .json({ success: false, message: "OTP has expired" });
       }
 
-      return res.status(200).json({ success: true, message: "OTP verified successfully" });
+      return res
+        .status(200)
+        .json({ success: true, message: "OTP verified successfully" });
     } catch (error) {
       logger.error("OTP validation error", { error: error.message });
-      return res.status(500).json({ success: false, message: "Failed to validate OTP" });
+      return res
+        .status(500)
+        .json({ success: false, message: "Failed to validate OTP" });
     }
   }
 
@@ -467,7 +486,9 @@ class AuthController {
         .single();
 
       if (userError || !user) {
-        return res.status(400).json({ success: false, message: "Invalid request" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid request" });
       }
 
       const { data: record, error: recordError } = await supabase
@@ -478,11 +499,15 @@ class AuthController {
         .single();
 
       if (recordError || !record) {
-        return res.status(400).json({ success: false, message: "Invalid or expired OTP" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid or expired OTP" });
       }
 
       if (new Date(record.expires_at) < new Date()) {
-        return res.status(400).json({ success: false, message: "OTP has expired" });
+        return res
+          .status(400)
+          .json({ success: false, message: "OTP has expired" });
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 12);
@@ -496,7 +521,10 @@ class AuthController {
         throw new Error(updateErr.message);
       }
 
-      await supabase.from("password_resets").delete().eq("user_id", user.user_id);
+      await supabase
+        .from("password_resets")
+        .delete()
+        .eq("user_id", user.user_id);
 
       res.json({ success: true, message: "Password reset successful" });
     } catch (error) {
@@ -651,7 +679,12 @@ class AuthController {
       const { password } = req.body;
 
       if (!password) {
-        return res.status(400).json({ success: false, message: "Password is required to delete account" });
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: "Password is required to delete account",
+          });
       }
 
       const { data: user, error: userError } = await supabase
@@ -661,23 +694,36 @@ class AuthController {
         .single();
 
       if (userError || !user) {
-        return res.status(404).json({ success: false, message: "User not found" });
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
       }
 
       const isValid = await bcrypt.compare(password, user.password_hash);
       if (!isValid) {
-        return res.status(401).json({ success: false, message: "Incorrect password" });
+        return res
+          .status(401)
+          .json({ success: false, message: "Incorrect password" });
       }
 
       // Soft delete — deactivate rather than hard delete to preserve data integrity
       const { error: deleteError } = await supabase
         .from("users")
-        .update({ is_active: false, email: `deleted_${userId}@echo.app`, updated_at: new Date() })
+        .update({
+          is_active: false,
+          email: `deleted_${userId}@echo.app`,
+          updated_at: new Date(),
+        })
         .eq("user_id", userId);
 
       if (deleteError) {
-        logger.error("Account deletion failed", { userId, error: deleteError.message });
-        return res.status(400).json({ success: false, message: "Failed to delete account" });
+        logger.error("Account deletion failed", {
+          userId,
+          error: deleteError.message,
+        });
+        return res
+          .status(400)
+          .json({ success: false, message: "Failed to delete account" });
       }
 
       logger.info("Account deleted (deactivated)", { userId });
@@ -685,7 +731,9 @@ class AuthController {
       res.json({ success: true, message: "Account deleted successfully" });
     } catch (error) {
       logger.error("Delete account error", { error: error.message });
-      res.status(500).json({ success: false, message: "Failed to delete account" });
+      res
+        .status(500)
+        .json({ success: false, message: "Failed to delete account" });
     }
   }
 }
