@@ -5,7 +5,6 @@ const isServerless = !!process.env.VERCEL;
 const transports = isServerless
   ? [new winston.transports.Console()]
   : [
-      new winston.transports.Console(),
       new winston.transports.File({
         filename: "logs/error.log",
         level: "error",
@@ -21,13 +20,10 @@ const logger = winston.createLogger({
     winston.format.json(),
   ),
   defaultMeta: { service: "voice-data-platform" },
-  transports: [
-    new winston.transports.File({ filename: "logs/error.log", level: "error" }),
-    new winston.transports.File({ filename: "logs/combined.log" }),
-  ],
+  transports,
 });
 
-if (process.env.NODE_ENV !== "production") {
+if (!isServerless && process.env.NODE_ENV !== "production") {
   logger.add(
     new winston.transports.Console({
       format: winston.format.combine(
