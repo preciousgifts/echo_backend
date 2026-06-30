@@ -1,19 +1,19 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
 // Import route files
-const authRoutes = require("./authRoutes");
-const userRoutes = require("./userRoutes");
-const recordingRoutes = require("./recordingRoutes");
-const validationRoutes = require("./validationRoutes");
-const promptRoutes = require("./promptRoutes");
-const analyticsRoutes = require("./analyticsRoutes");
-const dialectRoutes = require("./dialectRoutes");
-const languageRoutes = require("./languageRoutes");
-const micropaymentRoutes = require("./micropaymentRoutes");
-const leaderboardRoutes = require("./leaderboardRoutes");
-const roleRequestRoutes = require("./roleRequestRoutes");
-const countriesRoutes = require("./countriesRoutes");
+import authRoutes from "./authRoutes.js";
+import userRoutes from "./userRoutes.js";
+import recordingRoutes from "./recordingRoutes.js";
+import validationRoutes from "./validationRoutes.js";
+import promptRoutes from "./promptRoutes.js";
+import analyticsRoutes from "./analyticsRoutes.js";
+import dialectRoutes from "./dialectRoutes.js";
+import languageRoutes from "./languageRoutes.js";
+import micropaymentRoutes from "./micropaymentRoutes.js";
+import leaderboardRoutes from "./leaderboardRoutes.js";
+import roleRequestRoutes from "./roleRequestRoutes.js";
+import countriesRoutes from "./countriesRoutes.js";
 
 // Use routes
 router.use("/auth", authRoutes);
@@ -38,4 +38,4 @@ router.get("/health", (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const supabase = require('../config/database');
-const logger = require('../config/logger');
+import supabase from '../config/database.js';
+import logger from '../config/logger.js';
 
 class LeaderboardController {
   // Compute rankings live from the users table — no separate leaderboard table required
@@ -93,4 +93,4 @@ class LeaderboardController {
   }
 }
 
-module.exports = LeaderboardController;
+export default LeaderboardController;

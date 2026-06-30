@@ -1,15 +1,9 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const RecordingController = require("../controllers/recordingController");
-const {
-  authenticateToken,
-  requireContributor,
-} = require("../middleware/authMiddleware");
-const {
-  validate,
-  recordingCreateSchema,
-} = require("../middleware/validationMiddleware");
-const multer = require("multer");
+import RecordingController from "../controllers/recordingController.js";
+import { authenticateToken, requireContributor, } from "../middleware/authMiddleware.js";
+import { validate, recordingCreateSchema, } from "../middleware/validationMiddleware.js";
+import multer from "multer";
 
 // Configure multer for file uploads
 const storage = multer.memoryStorage();
@@ -54,4 +48,4 @@ router.put(
   RecordingController.updateRecordingStatus
 );
 
-module.exports = router;
+export default router;

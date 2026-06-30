@@ -1,11 +1,7 @@
 // config/s3.js
-const { S3Client } = require("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const {
-  PutObjectCommand,
-  GetObjectCommand,
-  DeleteObjectCommand,
-} = require("@aws-sdk/client-s3");
+import { S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand, } from "@aws-sdk/client-s3";
 
 const REGION = process.env.AWS_REGION || "us-east-1";
 const BUCKET = process.env.S3_BUCKET;
@@ -77,11 +73,4 @@ async function deleteFromS3(key) {
   await s3Client.send(command);
 }
 
-module.exports = {
-  s3Client,
-  uploadBuffer,
-  getPresignedPutUrl,
-  getPresignedGetUrl,
-  deleteFromS3,
-  BUCKET,
-};
+export { s3Client, uploadBuffer, getPresignedPutUrl, getPresignedGetUrl, deleteFromS3, BUCKET, };

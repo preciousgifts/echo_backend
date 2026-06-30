@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const userRegistrationSchema = Joi.object({
   first_name: Joi.string().min(1).max(100).required(),
@@ -82,13 +82,4 @@ const validate = (schema) => {
   };
 };
 
-module.exports = {
-  userRegistrationSchema,
-  userLoginSchema,
-  userUpdateSchema,
-  promptCreateSchema,
-  recordingCreateSchema,
-  validationCreateSchema,
-  badgeCreateSchema,
-  validate
-};
+export { userRegistrationSchema, userLoginSchema, userUpdateSchema, promptCreateSchema, recordingCreateSchema, validationCreateSchema, badgeCreateSchema, validate };

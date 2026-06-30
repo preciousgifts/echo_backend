@@ -1,5 +1,5 @@
-const supabase = require("../config/database");
-const logger = require("../config/logger");
+import supabase from "../config/database.js";
+import logger from "../config/logger.js";
 
 class LanguageController {
   // Get all languages
@@ -129,4 +129,4 @@ class LanguageController {
   }
 }
 
-module.exports = LanguageController;
+export default LanguageController;

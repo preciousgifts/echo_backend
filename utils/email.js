@@ -1,6 +1,6 @@
-const { SendMailClient } = require("zeptomail");
-const logger = require("../config/logger");
-require("dotenv").config();
+import { SendMailClient } from "zeptomail";
+import logger from "../config/logger.js";
+import "dotenv/config";
 
 const client = new SendMailClient({
   url: process.env.ZEPTO_URL,
@@ -92,4 +92,4 @@ class EmailService {
   }
 }
 
-module.exports = EmailService;
+export default EmailService;

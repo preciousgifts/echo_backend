@@ -1,10 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const AnalyticsController = require("../controllers/analyticsController");
-const {
-  authenticateToken,
-  requireAdmin,
-} = require("../middleware/authMiddleware");
+import AnalyticsController from "../controllers/analyticsController.js";
+import { authenticateToken, requireAdmin, } from "../middleware/authMiddleware.js";
 
 router.get(
   "/dashboard",
@@ -24,4 +21,4 @@ router.get(
   AnalyticsController.getAnalyticsSnapshots
 );
 
-module.exports = router;
+export default router;

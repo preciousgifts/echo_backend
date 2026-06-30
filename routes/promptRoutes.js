@@ -1,14 +1,8 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const PromptController = require("../controllers/promptController");
-const {
-  authenticateToken,
-  requireAdmin,
-} = require("../middleware/authMiddleware");
-const {
-  validate,
-  promptCreateSchema,
-} = require("../middleware/validationMiddleware");
+import PromptController from "../controllers/promptController.js";
+import { authenticateToken, requireAdmin, } from "../middleware/authMiddleware.js";
+import { validate, promptCreateSchema, } from "../middleware/validationMiddleware.js";
 
 router.post(
   "/create",
@@ -38,4 +32,4 @@ router.delete(
   PromptController.deletePrompt,
 );
 
-module.exports = router;
+export default router;

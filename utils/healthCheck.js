@@ -1,5 +1,5 @@
-const supabase = require("../config/database");
-const logger = require("../config/logger");
+import supabase from "../config/database.js";
+import logger from "../config/logger.js";
 
 /**
  * Performs a simple health check on the database
@@ -53,7 +53,4 @@ function startHealthCheckInterval() {
   return intervalId;
 }
 
-module.exports = {
-  checkDatabaseHealth,
-  startHealthCheckInterval,
-};
+export { checkDatabaseHealth, startHealthCheckInterval, };

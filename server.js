@@ -1,16 +1,19 @@
-const express = require("express");
-const rateLimit = require("express-rate-limit");
-const helmet = require("helmet");
-const cors = require("cors");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-const path = require("path");
-require("dotenv").config();
+import express from "express";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import cors from "cors";
+import morgan from "morgan";
+import bodyParser from "body-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+import "dotenv/config";
 
 // Import routes and middleware
-const routes = require("./routes");
-const logger = require("./config/logger");
-const { startHealthCheckInterval } = require("./utils/healthCheck");
+import routes from "./routes/index.js";
+import logger from "./config/logger.js";
+import { startHealthCheckInterval } from "./utils/healthCheck.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 3000;

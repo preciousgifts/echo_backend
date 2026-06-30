@@ -1,7 +1,8 @@
-const supabase = require("../config/database");
-const logger = require("../config/logger");
-const { v4: uuidv4 } = require("uuid");
-const EmailService = require("../utils/email");
+import supabase from "../config/database.js";
+import logger from "../config/logger.js";
+import { v4 as uuidv4 } from "uuid";
+import EmailService from "../utils/email.js";
+import bcrypt from "bcryptjs";
 
 class UserController {
   static async getAllUsers(req, res) {
@@ -448,8 +449,7 @@ class UserController {
       }
 
       // Hash password before saving
-      const bcrypt = require("bcryptjs");
-      const password_hash = await bcrypt.hash(password, 10);
+            const password_hash = await bcrypt.hash(password, 10);
 
       const newUser = {
         user_id: uuidv4(),
@@ -515,4 +515,4 @@ class UserController {
   }
 }
 
-module.exports = UserController;
+export default UserController;

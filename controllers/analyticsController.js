@@ -1,5 +1,5 @@
-const supabase = require('../config/database');
-const logger = require('../config/logger');
+import supabase from '../config/database.js';
+import logger from '../config/logger.js';
 
 class AnalyticsController {
   static async getDashboardStats(req, res) {
@@ -171,4 +171,4 @@ class AnalyticsController {
   }
 }
 
-module.exports = AnalyticsController;
+export default AnalyticsController;

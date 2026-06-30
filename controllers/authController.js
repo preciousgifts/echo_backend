@@ -1,11 +1,10 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { v4: uuidv4 } = await import("uuid");
-const supabase = require("../config/database");
-const EmailService = require("../utils/email");
-const logger = require("../config/logger");
-const { randomInt } = require("crypto");
-const { error } = require("console");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
+import supabase from "../config/database.js";
+import EmailService from "../utils/email.js";
+import logger from "../config/logger.js";
+import { randomInt } from "crypto";
 
 class AuthController {
   static async register(req, res) {
@@ -738,4 +737,4 @@ class AuthController {
   }
 }
 
-module.exports = AuthController;
+export default AuthController;

@@ -1,13 +1,8 @@
-const supabase = require("../config/database");
-const logger = require("../config/logger");
-const env = require("dotenv").config();
-const { v4: uuidv4 } = require("uuid");
-const {
-  uploadBuffer,
-  getPresignedPutUrl,
-  getPresignedGetUrl,
-  deleteFromS3,
-} = require("../config/s3");
+import supabase from "../config/database.js";
+import logger from "../config/logger.js";
+import "dotenv/config";
+import { v4 as uuidv4 } from "uuid";
+import { uploadBuffer, getPresignedPutUrl, getPresignedGetUrl, deleteFromS3, } from "../config/s3.js";
 
 class RecordingController {
   /**
@@ -340,4 +335,4 @@ class RecordingController {
   }
 }
 
-module.exports = RecordingController;
+export default RecordingController;

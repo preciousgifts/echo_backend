@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const UserController = require('../controllers/userController');
-const { authenticateToken, requireAdmin } = require('../middleware/authMiddleware');
+import UserController from '../controllers/userController.js';
+import { authenticateToken, requireAdmin } from '../middleware/authMiddleware.js';
 
 router.get('/', authenticateToken, requireAdmin, UserController.getAllUsers);
 router.get('/:userId', authenticateToken, UserController.getUserById);
@@ -12,4 +12,4 @@ router.get('/:userId/stats', authenticateToken, UserController.getUserStats);
 router.get('/:userId/recordings', authenticateToken, UserController.getUserRecordings);
 router.post('/create-validator', authenticateToken,requireAdmin, UserController.createValidatorAccount);
 
-module.exports = router;
+export default router;

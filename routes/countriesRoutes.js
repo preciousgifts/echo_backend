@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const CountriesController = require('../controllers/countriesController');
+import CountriesController from '../controllers/countriesController.js';
 
 router.get('/', CountriesController.getAllCountries);
 
-module.exports = router;
+export default router;

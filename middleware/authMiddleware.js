@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const supabase = require('../config/database');
-const logger = require('../config/logger');
+import jwt from 'jsonwebtoken';
+import supabase from '../config/database.js';
+import logger from '../config/logger.js';
 
 const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -71,10 +71,4 @@ const requireAdmin = authorizeRoles('admin');
 const requireValidator = authorizeRoles('validator', 'admin');
 const requireContributor = authorizeRoles('contributor', 'validator', 'admin');
 
-module.exports = {
-  authenticateToken,
-  authorizeRoles,
-  requireAdmin,
-  requireValidator,
-  requireContributor
-};
+export { authenticateToken, authorizeRoles, requireAdmin, requireValidator, requireContributor };

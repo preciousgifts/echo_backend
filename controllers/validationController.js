@@ -1,6 +1,6 @@
-const supabase = require('../config/database');
-const logger = require('../config/logger');
-const { v4: uuidv4 } = require('uuid');
+import supabase from '../config/database.js';
+import logger from '../config/logger.js';
+import { v4 as uuidv4 } from 'uuid';
 
 class ValidationController {
   static async createValidation(req, res) {
@@ -220,4 +220,4 @@ class ValidationController {
   }
 }
 
-module.exports = ValidationController;
+export default ValidationController;

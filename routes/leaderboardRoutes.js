@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const LeaderboardController = require('../controllers/leaderboardController');
-const { authenticateToken } = require('../middleware/authMiddleware');
+import LeaderboardController from '../controllers/leaderboardController.js';
+import { authenticateToken } from '../middleware/authMiddleware.js';
 
 router.get('/', authenticateToken, LeaderboardController.getLeaderboard);
 
-module.exports = router;
+export default router;

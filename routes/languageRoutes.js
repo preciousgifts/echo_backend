@@ -1,11 +1,11 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const LanguageController = require("../controllers/languageController");
-const { authenticateToken, requireAdmin } = require("../middleware/authMiddleware");
+import LanguageController from "../controllers/languageController.js";
+import { authenticateToken, requireAdmin } from "../middleware/authMiddleware.js";
 
 router.get("/", LanguageController.getAllLanguages);
 router.post("/", authenticateToken, requireAdmin, LanguageController.addLanguage);
 router.put("/:languageId", authenticateToken, requireAdmin, LanguageController.updateLanguage);
 router.delete("/:languageId", authenticateToken, requireAdmin, LanguageController.deleteLanguage);
 
-module.exports = router;
+export default router;

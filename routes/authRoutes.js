@@ -1,12 +1,8 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const AuthController = require("../controllers/authController");
-const {
-  validate,
-  userRegistrationSchema,
-  userLoginSchema,
-} = require("../middleware/validationMiddleware");
-const { authenticateToken } = require("../middleware/authMiddleware");
+import AuthController from "../controllers/authController.js";
+import { validate, userRegistrationSchema, userLoginSchema, } from "../middleware/validationMiddleware.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 
 router.post(
   "/register",
@@ -28,4 +24,4 @@ router.delete("/account", authenticateToken, AuthController.deleteAccount);
 router.post("/registration-otp", AuthController.sendRegistrationOtp);
 router.post("/verify-registration-otp", AuthController.validateRegistrationOtp);
 
-module.exports = router;
+export default router;
